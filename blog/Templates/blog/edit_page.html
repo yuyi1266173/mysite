@@ -5,6 +5,7 @@
 	</head>
 	<body>
 		<form action="action/" method="post">
+			{% csrf_token %}
 			<label>文章标题
 				<input type="text" name="title">
 			</label>
