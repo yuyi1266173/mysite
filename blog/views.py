@@ -16,17 +16,31 @@ def article_page(request, article_id):
 	article = models.Article.objects.get(pk = article_id)
 	return render(request, 'blog/article_page.html', {'article': article})
 
-def edit_page(request):
-	return render(request, 'blog/edit_page.html')
+def edit_page(request, article_id):
+	if str(article_id) == '0':
+		return render(request, 'blog/edit_page.html')
+	else:
+		article = models.Article.objects.get(pk = article_id)
+		return render(request, 'blog/edit_page.html', {'article': article})
+	
 
 def edit_action(request):
 	#title = request.POST['title']
 	title = request.POST.get('title', 'TITLE')
 	content = request.POST.get('content', 'CONTENT')
-	models.Article.objects.create(title = title, content = content)
+	article_id = request.POST.get('id', '0')
 
-	articles = models.Article.objects.all()
-	return render(request, 'blog/pagelist.html', {'articles': articles})
+	if article_id == '0':
+		models.Article.objects.create(title = title, content = content)
+		articles = models.Article.objects.all()
+		return render(request, 'blog/pagelist.html', {'articles': articles})
+	else:
+		article = models.Article.objects.get(pk=article_id)
+		article.title = title
+		article.content = content
+		article.save()
+
+		return render(request, 'blog/article_page.html', {'article': article})
 
 
 
