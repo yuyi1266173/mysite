@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page List</title>
+</head>
+<body>
+<h1>
+	<a href="">Add New Article</a>
+	<br/>
+	<br/>
+</h1>
+
+{% for  article in articles %}
+	<a href="">{{article.title}}</a>
+	<br/>
+{% endfor %}
+
+<br>
+
+</body>
+</html>
